@@ -14,8 +14,31 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+
+"""===============swagger docs========"""
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+swagger_views = get_schema_view(
+    openapi.Info(
+        title='Blog API',
+        default_version='v1',
+        description='blog API'
+
+    ),
+    public = True
+
+)
+"""================================"""
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', swagger_views.with_ui('swagger', cache_timeout=0)),
+    path('account/', include('account.urls')),
+
+
 ]
+
